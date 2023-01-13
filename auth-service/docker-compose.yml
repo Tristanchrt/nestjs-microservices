@@ -1,0 +1,27 @@
+version: "3"
+
+networks:
+  ph-test:
+    external: true
+
+services:
+  auth-service:
+    container_name: ph_auth_service_api
+    build:
+      dockerfile: Dockerfile
+      context: .
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - kafka
+      - kafka-ui
+    env_file:
+      - .env
+    command: npm run start:dev
+    ports:
+      - 3000:3000
+    networks:
+      - ph-test
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.auth-service.rule=Host(`ph.local`) && PathPrefix(`/auth`)"
