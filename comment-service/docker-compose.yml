@@ -1,0 +1,24 @@
+version: "3"
+
+networks:
+  ph-test:
+    external: true
+
+services:
+  comment-service:
+    container_name: ph_comment-service_api
+    build:
+      dockerfile: Dockerfile
+      context: .
+    volumes:
+      - .:/usr/src/app
+    env_file:
+      - .env
+    command: npm run start:dev
+    ports:
+      - 3001:3001
+    networks:
+      - ph-test
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.comment-service.rule=Host(`ph.local`) && PathPrefix(`/comment`)"
