@@ -39,6 +39,11 @@ services:
       - ./traefik:/etc/traefik/
     networks:
       - ph-test
+    labels:
+      -  "traefik.http.middlewares.auth-middleware.forwardauth.address=http://auth-service:3003/auth/current"
+      -  "traefik.http.middlewares.auth-middleware.forwardauth.authRequestHeaders=Authorization"
+      -  "traefik.http.middlewares.auth-middleware.forwardauth.authResponseHeaders=X-Auth-User,Authorization"
+      -  "traefik.http.routers.preflight-router.service=auth-service"
 
   post-db:
     image: mongo

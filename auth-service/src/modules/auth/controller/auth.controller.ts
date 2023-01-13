@@ -19,7 +19,7 @@ export class AuthController {
     }
 
     @UseGuards(JwtAuthGuard)
-    @Get('/verif')
+    @Get('/current')
     getProfile(@Request() req) {
         return req.user;
     }
