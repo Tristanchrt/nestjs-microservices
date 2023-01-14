@@ -13,6 +13,7 @@ services:
     volumes:
       - .:/usr/src/app
     depends_on:
+      - traefik
       - kafka
       - kafka-ui
     env_file:
@@ -24,6 +25,7 @@ services:
       - ph-test
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.post-service.middlewares=auth-middleware"
       - "traefik.http.routers.post-service.rule=Host(`ph.local`) && PathPrefix(`/post`)"
 
   traefik:
@@ -40,10 +42,10 @@ services:
     networks:
       - ph-test
     labels:
-      -  "traefik.http.middlewares.auth-middleware.forwardauth.address=http://auth-service:3003/auth/current"
-      -  "traefik.http.middlewares.auth-middleware.forwardauth.authRequestHeaders=Authorization"
-      -  "traefik.http.middlewares.auth-middleware.forwardauth.authResponseHeaders=X-Auth-User,Authorization"
-      -  "traefik.http.routers.preflight-router.service=auth-service"
+      - "traefik.http.middlewares.auth-middleware-trust.forwardauth.trustForwardHeader=true"
+      - "traefik.http.middlewares.auth-middleware.forwardauth.address=http://auth-service:3003/auth/verif"
+      - "traefik.http.middlewares.auth-middleware.forwardauth.authRequestHeaders=Authorization"
+      - "traefik.http.middlewares.auth-middleware.forwardauth.authResponseHeaders=X-Auth-User,Authorization"
 
   post-db:
     image: mongo
