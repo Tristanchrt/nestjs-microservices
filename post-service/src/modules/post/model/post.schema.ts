@@ -11,13 +11,13 @@ export enum PostType {
 
 @Schema()
 export class Post {
-    @Prop()
+    @Prop({ required: true })
     title: string;
 
     @Prop()
     description: string;
 
-    @Prop()
+    @Prop({ required: true })
     postType: PostType;
     
     @Prop()
@@ -26,7 +26,7 @@ export class Post {
     @Prop()
     _comments: Array<Object>;
 
-    @Prop()
+    @Prop({ required: true })
     _user_id: string;
 }
 
