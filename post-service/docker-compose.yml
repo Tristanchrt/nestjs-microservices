@@ -25,6 +25,7 @@ services:
       - ph-test
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.post-service-https.service=post-service"
       - "traefik.http.routers.post-service.middlewares=auth-middleware"
       - "traefik.http.routers.post-service.rule=Host(`ph.local`) && PathPrefix(`/post`)"
 

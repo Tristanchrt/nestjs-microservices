@@ -21,4 +21,5 @@ services:
       - ph-test
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.auth-service-https.service=auth-service"
       - "traefik.http.routers.auth-service.rule=Host(`ph.local`) && PathPrefix(`/auth`)"
