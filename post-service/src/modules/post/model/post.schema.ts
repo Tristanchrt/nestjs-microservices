@@ -1,13 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
+import { PostType } from './common';
 
 export type PostDocument = HydratedDocument<Post>;
-
-
-export enum PostType {
-    "VIDEO",
-    "IMAGE",
-}
 
 @Schema()
 export class Post {

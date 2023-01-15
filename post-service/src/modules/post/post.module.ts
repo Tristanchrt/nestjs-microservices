@@ -6,6 +6,7 @@ import { GetPostSearvice } from './services/get.post.service';
 import { PostController } from './controller/post.controller';
 import { GetPostApplication } from './application/get.post.application';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { MongooseModule } from '@nestjs/mongoose';
 
 
 @Module({
@@ -24,7 +25,9 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
                     }
                 }
             },
-        ]),],
+        ]),
+            
+    ],
     controllers: [PostController],
     providers: [GetPostApplication, GetPostSearvice],
 })
