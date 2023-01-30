@@ -49,13 +49,13 @@ services:
       - "traefik.http.middlewares.auth-middleware.forwardauth.authRequestHeaders=Authorization"
       - "traefik.http.middlewares.auth-middleware.forwardauth.authResponseHeaders=X-Auth-User,Authorization"
 
-  post-db:
+  comment-db:
     image: mongo
-    container_name: ph_post-db
+    container_name: ph_comment-db
     ports:
       - 27018:27017
     volumes:
-      - ~/db/loaded/mongo:/data/db
+      - ~/apps/commentdb/mongo:/data/db
     environment:
       - MONGO_INITDB_ROOT_USERNAME=test
       - MONGO_INITDB_ROOT_PASSWORD=test123
@@ -99,7 +99,21 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - ~/apps/search_data/mongo:/data/db
+      - ~/apps/postdb/mongo:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=test
+      - MONGO_INITDB_ROOT_PASSWORD=test123
+      - MONGO_INITDB_DATABASE=development=testdb
+    networks:
+      - ph-test
+
+  authdb:
+    image: mongo
+    container_name: ph_authdb
+    ports:
+      - 27019:27017
+    volumes:
+      - ~/apps/authdb/mongo:/data/db
     environment:
       - MONGO_INITDB_ROOT_USERNAME=test
       - MONGO_INITDB_ROOT_PASSWORD=test123
