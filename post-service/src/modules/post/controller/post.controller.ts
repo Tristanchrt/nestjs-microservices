@@ -22,13 +22,13 @@ export class PostController {
         return "TTTTTTTTTTTTTTTTTTTTTTTTTIIIIIIIIIIIIIIIIIIIIIIIIIIIII"
     }
 
-        @Get()
+    @Get()
     async findAll(@Req() request: any): Promise<string> {
         return await this.getPostApplication.getAll();
     }
 
     @Get(':id')
-    // @UseGuards(new AuthGuard())
+    @UseGuards(new AuthGuard())
     async findOne(@Res() res, @Req() req, @Param('id') id: string) {
         return await this.getPostApplication.getById(id);
     }
